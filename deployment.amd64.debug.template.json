@@ -51,28 +51,19 @@
           }
         },
         "modules": {
-          "tempSensor": {
-            "version": "1.0",
-            "type": "docker",
-            "status": "running",
-            "restartPolicy": "always",
-            "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
-              "createOptions": {}
-            }
-          },
           "OBDModule": {
             "version": "1.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.OBDModule.debug}",
+              "image": "${MODULES.OBDModule.amd64.debug}",
               "createOptions": {
                 "ExposedPorts": {
                   "5678/tcp": {}
                 },
                 "HostConfig": {
+                  "Privileged":"true",
                   "PortBindings": {
                     "5678/tcp": [
                       {

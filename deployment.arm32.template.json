@@ -45,30 +45,29 @@
                       }
                     ]
                   }
+                },
+                "env": {
+                  "OptimizeForPerformance": {
+                      "value": "false"
+                  }
                 }
               }
             }
           }
         },
         "modules": {
-          "tempSensor": {
-            "version": "1.0",
-            "type": "docker",
-            "status": "running",
-            "restartPolicy": "always",
-            "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
-              "createOptions": {}
-            }
-          },
           "OBDModule": {
             "version": "1.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.OBDModule}",
-              "createOptions": {}
+              "image": "${MODULES.OBDModule.arm32v7}",
+              "createOptions": {
+                "HostConfig": {
+                  "Privileged":"true"
+                }
+              }
             }
           }
         }

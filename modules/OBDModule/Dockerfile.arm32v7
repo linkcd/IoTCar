@@ -1,5 +1,8 @@
 FROM resin/raspberrypi3-debian:stretch
 
+#
+RUN [ "cross-build-start" ]
+
 WORKDIR /app
 
 RUN apt-get update && \
@@ -13,7 +16,15 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+#add user before cross-build-end, otherwise there is an error
 RUN useradd -ms /bin/bash moduleuser
+
+
+RUN [ "cross-build-end" ] 
+
+#switch to this newly created user "moduleuser" after cross-build-end, otherwise there is an error
 USER moduleuser
 
+
 ENTRYPOINT [ "python3", "-u", "./main.py" ]
+
