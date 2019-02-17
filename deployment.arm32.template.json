@@ -9,7 +9,13 @@
           "settings": {
             "minDockerVersion": "v1.25",
             "loggingOptions": "",
-            "registryCredentials": {}
+            "registryCredentials": {
+              "dockerHub": {
+                "username": "$CONTAINER_REGISTRY_USERNAME",
+                "password": "$CONTAINER_REGISTRY_PASSWORD",
+                "address": "$CONTAINER_REGISTRY_ADDRESS"
+              }
+            }
           }
         },
         "systemModules": {
@@ -45,12 +51,12 @@
                       }
                     ]
                   }
-                },
-                "env": {
-                  "OptimizeForPerformance": {
-                      "value": "false"
-                  }
                 }
+              }
+            },
+            "env": {
+              "OptimizeForPerformance": {
+                  "value": "false"
               }
             }
           }
@@ -77,8 +83,7 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-          "OBDModuleToIoTHub": "FROM /messages/modules/OBDModule/outputs/* INTO $upstream",
-          "sensorToOBDModule": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/OBDModule/inputs/input1\")"
+          "OBDModuleToIoTHub": "FROM /messages/modules/OBDModule/outputs/* INTO $upstream"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
