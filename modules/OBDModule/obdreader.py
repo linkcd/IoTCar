@@ -1,5 +1,6 @@
 from datetime import datetime
 import obd
+import json
 
 connection = obd.OBD(fast=True) # auto-connects to USB or RF port
 
@@ -9,7 +10,9 @@ def getValue(r):
     else:
         return 0
 
-def getVehicleTelemtries():
+def getVehicleTelemtries(deviceId):
+    mydeviceId = deviceId + "_OBD"
+
     global connection
     if(not connection.is_connected()):
         print("No connecting to the car, reconnecting...")
@@ -18,7 +21,7 @@ def getVehicleTelemtries():
     try:
         
         timestamp = str(datetime.now())
-        message = {'timestamp': timestamp}
+        message = {'timestamp': timestamp, 'deviceId': mydeviceId}
         # allCommands = connection.supported_commands
         allCommands = [
                         obd.commands.RUN_TIME, 
@@ -60,7 +63,7 @@ def getVehicleTelemtries():
             connection = obd.OBD(fast=True) 
             return None
         else:
-            return message
+            return json.dumps(message)
 
     except Exception as e:
         print("Error with OBDII, error: " + str(e) + ". Reconnecting...")

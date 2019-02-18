@@ -4,7 +4,7 @@ import time
 
 
 while True:
-    msg = obdreader.getVehicleTelemtries()
+    msg = obdreader.getVehicleTelemtries("test-connection")
     if(msg is not None):
         print(msg)
     else:

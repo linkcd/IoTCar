@@ -17,6 +17,9 @@ import obdreader
 # By default, messages do not expire.
 MESSAGE_TIMEOUT = 10000
 
+#TODO get real device id
+DEVICE_ID = "FengDevice"
+
 # global counters
 RECEIVE_CALLBACKS = 0
 SEND_CALLBACKS = 0
@@ -63,7 +66,7 @@ def main(protocol):
         print ( "This module is now waiting for messages and will indefinitely.  Press Ctrl-C to exit. ")
 
         while True:
-            obdMsg = obdreader.getVehicleTelemtries()
+            obdMsg = obdreader.getVehicleTelemtries(DEVICE_ID)
             print("received obd msg: " + str(obdMsg))
             if(obdMsg is not None):
                 msg = IoTHubMessage(bytearray(obdMsg, 'utf8'))
