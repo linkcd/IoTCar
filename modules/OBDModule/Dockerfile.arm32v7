@@ -22,7 +22,7 @@ RUN useradd -ms /bin/bash moduleuser
 RUN [ "cross-build-end" ] 
 
 #switch to this newly created user "moduleuser" after cross-build-end, otherwise there is an error
-#USER moduleuser
+#USER moduleuser #temp disabled this, to ensure docker can access /dev
 
 
 ENTRYPOINT [ "python3", "-u", "./main.py" ]

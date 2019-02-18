@@ -1,0 +1,29 @@
+FROM resin/raspberrypi3-debian:stretch
+
+#
+RUN [ "cross-build-start" ]
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libboost-python1.62.0 python3-pip libpython3-dev gpsd gpsd-clients  && \
+    rm -rf /var/lib/apt/lists/* 
+
+RUN pip3 install --upgrade pip 
+RUN pip install --upgrade setuptools 
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY . .
+
+#add user before cross-build-end, otherwise there is an error
+RUN useradd -ms /bin/bash moduleuser
+
+RUN [ "cross-build-end" ] 
+
+#switch to this newly created user "moduleuser" after cross-build-end, otherwise there is an error
+#USER moduleuser #temp disabled this, to ensure docker can access /dev
+
+
+ENTRYPOINT [ "python3", "-u", "./main.py" ]
+

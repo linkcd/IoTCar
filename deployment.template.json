@@ -9,7 +9,13 @@
           "settings": {
             "minDockerVersion": "v1.25",
             "loggingOptions": "",
-            "registryCredentials": {}
+            "registryCredentials": {
+              "dockerHub": {
+                "username": "$CONTAINER_REGISTRY_USERNAME",
+                "password": "$CONTAINER_REGISTRY_PASSWORD",
+                "address": "$CONTAINER_REGISTRY_ADDRESS"
+              }
+            }
           }
         },
         "systemModules": {
@@ -47,6 +53,11 @@
                   }
                 }
               }
+            },
+            "env": {
+              "OptimizeForPerformance": {
+                "value": "false"
+              }
             }
           }
         },
@@ -57,22 +68,22 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.OBDModule.amd64.debug}",
+              "image": "${MODULES.OBDModule.arm32v7}",
               "createOptions": {
-                "ExposedPorts": {
-                  "5678/tcp": {}
-                },
                 "HostConfig": {
-                  "Privileged":"true",
-                  "PortBindings": {
-                    "5678/tcp": [
-                      {
-                        "HostPort": "5678"
-                      }
-                    ]
-                  }
+                  "Privileged": "true"
                 }
               }
+            }
+          },
+          "LocatorModule": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "${MODULES.LocatorModule}",
+              "createOptions": {}
             }
           }
         }
@@ -83,7 +94,7 @@
         "schemaVersion": "1.0",
         "routes": {
           "OBDModuleToIoTHub": "FROM /messages/modules/OBDModule/outputs/* INTO $upstream",
-          "sensorToOBDModule": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/OBDModule/inputs/input1\")"
+          "LocatorModuleToIoTHub": "FROM /messages/modules/LocatorModule/outputs/* INTO $upstream"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
