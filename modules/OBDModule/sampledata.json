@@ -1,0 +1,135 @@
+[obd.obd] 'b'0108': Short Term Fuel Trim - Bank 2' is not supported
+[obd.obd] 'b'0109': Long Term Fuel Trim - Bank 2' is not supported
+[obd.obd] 'b'010A': Fuel Pressure' is not supported
+[obd.obd] 'b'0146': Ambient air temperature' is not supported
+[obd.obd] 'b'012F': Fuel Level Input' is not supported
+[obd.obd] 'b'015C': Engine oil temperature' is not supported
+[obd.obd] 'b'015C': Engine oil temperature' is not supported
+received obd msg: 
+{
+    "SHORT_FUEL_TRIM_1": "-0.78125",
+    "THROTTLE_POS": "20.0",
+    "OIL_TEMP": "0",
+    "FUEL_LEVEL": "0",
+    "ENGINE_LOAD": "36.470588235294116",
+    "COOLANT_TEMP": "43",
+    "RELATIVE_THROTTLE_POS": "2.7450980392156863",
+    "LONG_FUEL_TRIM_2": "0",
+    "AMBIANT_AIR_TEMP": "0",
+    "TIMING_ADVANCE": "14.0",
+    "RUN_TIME": "151",
+    "deviceId": "LUFENG",
+    "FUEL_PRESSURE": "0",
+    "LONG_FUEL_TRIM_1": "-6.25",
+    "timestamp": "2019-02-18 09:20:37.758890",
+    "RPM": "1239.0",
+    "MAF": "5.53",
+    "INTAKE_TEMP": "7",
+    "INTAKE_PRESSURE": "38",
+    "SHORT_FUEL_TRIM_2": "0",
+    "ABSOLUTE_LOAD": "54.11764705882353",
+    "SPEED": "32"
+}
+
+Confirmation[0] received for message with result = OK
+    Properties: {}
+    Total calls confirmed: 117
+
+new sample data:
+{
+    "timestamp": "2019-02-19 19:30:56.549344",
+    "deviceId": "test-connection_OBD",
+    "series": [
+        {
+            "RUN_TIME": "18",
+            "RPM": "12418.75",
+            "SPEED": "29",
+            "MAF": "417.48",
+            "THROTTLE_POS": "16.07843137254902",
+            "COOLANT_TEMP": "26",
+            "ENGINE_LOAD": "10.980392156862745",
+            "SHORT_FUEL_TRIM_1": "-21.09375",
+            "LONG_FUEL_TRIM_1": "18.75",
+            "INTAKE_PRESSURE": "0",
+            "TIMING_ADVANCE": "0.0",
+            "INTAKE_TEMP": "0",
+            "RELATIVE_THROTTLE_POS": "0.0",
+            "ABSOLUTE_LOAD": "0.0",
+            "OIL_TEMP": "16"
+        }
+    ]
+}
+{
+    "timestamp": "2019-02-19 19:30:57.740998",
+    "deviceId": "test-connection_OBD",
+    "series": [
+        {
+            "RUN_TIME": "19",
+            "RPM": "12418.75",
+            "SPEED": "29",
+            "MAF": "417.48",
+            "THROTTLE_POS": "16.07843137254902",
+            "COOLANT_TEMP": "26",
+            "ENGINE_LOAD": "10.980392156862745",
+            "SHORT_FUEL_TRIM_1": "-21.09375",
+            "LONG_FUEL_TRIM_1": "18.75",
+            "INTAKE_PRESSURE": "0",
+            "TIMING_ADVANCE": "0.0",
+            "INTAKE_TEMP": "0",
+            "RELATIVE_THROTTLE_POS": "0.0",
+            "ABSOLUTE_LOAD": "0.0",
+            "OIL_TEMP": "16"
+        }
+    ]
+}
+
+directly from monitoring:
+[IoTHubMonitor] [9:22:31 PM] Message received from [Pi2/OBDModule]:
+{
+  "series": [
+    {
+      "INTAKE_TEMP": "0",
+      "COOLANT_TEMP": "-7",
+      "SPEED": "241",
+      "RPM": "1010.75",
+      "SHORT_FUEL_TRIM_1": "-21.09375",
+      "RUN_TIME": "1990",
+      "TIMING_ADVANCE": "0.0",
+      "INTAKE_PRESSURE": "0",
+      "ABSOLUTE_LOAD": "0.0",
+      "LONG_FUEL_TRIM_1": "18.75",
+      "MAF": "487.06",
+      "OIL_TEMP": "16",
+      "RELATIVE_THROTTLE_POS": "0.0",
+      "ENGINE_LOAD": "27.84313725490196",
+      "THROTTLE_POS": "24.313725490196077"
+    }
+  ],
+  "deviceId": "FengsDevice_OBD",
+  "timestamp": "2019-02-19 20:22:31.567415"
+}
+[IoTHubMonitor] There is a running job to monitor D2C message. Please stop it first.
+[IoTHubMonitor] [9:22:32 PM] Message received from [Pi2/OBDModule]:
+{
+  "series": [
+    {
+      "INTAKE_TEMP": "0",
+      "COOLANT_TEMP": "-7",
+      "SPEED": "241",
+      "RPM": "1010.75",
+      "SHORT_FUEL_TRIM_1": "-21.09375",
+      "RUN_TIME": "1992",
+      "TIMING_ADVANCE": "0.0",
+      "INTAKE_PRESSURE": "0",
+      "ABSOLUTE_LOAD": "0.0",
+      "LONG_FUEL_TRIM_1": "18.75",
+      "MAF": "487.06",
+      "OIL_TEMP": "16",
+      "RELATIVE_THROTTLE_POS": "0.0",
+      "ENGINE_LOAD": "27.84313725490196",
+      "THROTTLE_POS": "24.313725490196077"
+    }
+  ],
+  "deviceId": "FengsDevice_OBD",
+  "timestamp": "2019-02-19 20:22:32.904259"
+}

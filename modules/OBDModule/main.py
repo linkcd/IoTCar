@@ -18,7 +18,7 @@ import obdreader
 MESSAGE_TIMEOUT = 10000
 
 #TODO get real device id
-DEVICE_ID = "FengDevice"
+DEVICE_ID = "FengsDevice"
 
 # global counters
 RECEIVE_CALLBACKS = 0

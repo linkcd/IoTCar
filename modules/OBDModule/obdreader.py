@@ -2,6 +2,9 @@ from datetime import datetime
 import obd
 import json
 
+#remove all obd logs
+obd.logger.removeHandler(obd.console_handler)
+
 connection = obd.OBD(fast=True) # auto-connects to USB or RF port
 
 def getValue(r):
@@ -10,18 +13,20 @@ def getValue(r):
     else:
         return 0
 
-def getVehicleTelemtries(deviceId):
+def buildJsonPayload(deviceId, telemtryDic):
     mydeviceId = deviceId + "_OBD"
+    timestamp = str(datetime.now())
+    payload = {'timestamp': timestamp, 'deviceId': mydeviceId, "series":[telemtryDic]}
 
+    return json.dumps(payload)
+
+def getVehicleTelemtries(deviceId):
     global connection
     if(not connection.is_connected()):
         print("No connecting to the car, reconnecting...")
         connection = obd.OBD(fast=True) 
-    
     try:
-        
-        timestamp = str(datetime.now())
-        message = {'timestamp': timestamp, 'deviceId': mydeviceId}
+        telemtryDic = {}
         # allCommands = connection.supported_commands
         allCommands = [
                         obd.commands.RUN_TIME, 
@@ -35,17 +40,16 @@ def getVehicleTelemtries(deviceId):
                         obd.commands.ENGINE_LOAD,
                         obd.commands.SHORT_FUEL_TRIM_1, 
                         obd.commands.LONG_FUEL_TRIM_1,
-                        obd.commands.SHORT_FUEL_TRIM_2,
-                        obd.commands.LONG_FUEL_TRIM_2,
-                        obd.commands.FUEL_PRESSURE,
+                        #obd.commands.SHORT_FUEL_TRIM_2,
+                        #obd.commands.LONG_FUEL_TRIM_2,
+                        #obd.commands.FUEL_PRESSURE,
                         obd.commands.INTAKE_PRESSURE,
                         obd.commands.TIMING_ADVANCE,
                         obd.commands.INTAKE_TEMP,
                         obd.commands.RELATIVE_THROTTLE_POS,
-                        obd.commands.AMBIANT_AIR_TEMP, 
-                        obd.commands.FUEL_LEVEL,
+                        #obd.commands.AMBIANT_AIR_TEMP, 
+                        #obd.commands.FUEL_LEVEL,
                         obd.commands.ABSOLUTE_LOAD,
-                        obd.commands.OIL_TEMP,
                         obd.commands.OIL_TEMP
 
                     ]
@@ -53,17 +57,17 @@ def getVehicleTelemtries(deviceId):
             try:
                 response = connection.query(obd.commands[command.name])
                 telemetryValue = getValue(response)
-                message[command.name] = str(telemetryValue)
+                telemtryDic[command.name] = str(telemetryValue)
             
             except Exception as e:
                 print ("Error querying OBDII entry: " + command.name + ", error: " + str(e))
         
-        if(message["RPM"] == "0"):
+        if(telemtryDic["RPM"] == "0"):
             print("Cannot read RPM, reconnecting...")
             connection = obd.OBD(fast=True) 
             return None
         else:
-            return json.dumps(message)
+            return buildJsonPayload(deviceId, telemtryDic)
 
     except Exception as e:
         print("Error with OBDII, error: " + str(e) + ". Reconnecting...")
