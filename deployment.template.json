@@ -82,8 +82,12 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.LocatorModule}",
-              "createOptions": {}
+              "image": "${MODULES.LocatorModule.arm32v7}",
+              "createOptions": {
+                "HostConfig": {
+                  "Privileged": "true"
+                }
+              }
             }
           }
         }

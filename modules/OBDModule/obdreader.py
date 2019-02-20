@@ -57,12 +57,12 @@ def getVehicleTelemtries(deviceId):
             try:
                 response = connection.query(obd.commands[command.name])
                 telemetryValue = getValue(response)
-                telemtryDic[command.name] = str(telemetryValue)
+                telemtryDic[command.name] = telemetryValue
             
             except Exception as e:
                 print ("Error querying OBDII entry: " + command.name + ", error: " + str(e))
         
-        if(telemtryDic["RPM"] == "0"):
+        if(telemtryDic["RPM"] == 0):
             print("Cannot read RPM, reconnecting...")
             connection = obd.OBD(fast=True) 
             return None
