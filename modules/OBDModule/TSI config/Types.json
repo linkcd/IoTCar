@@ -1,0 +1,160 @@
+{
+    "put": [
+        {
+            "id": "d0370cb4-f185-42fc-bf39-7d533de3bed4",
+            "name": "OBD",
+            "variables": {
+                "SPEED": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_SPEED].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "RPM": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_RPM].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "RUN_TIME": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_RUN_TIME].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "MAF": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_MAF].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "THROTTLE_POS": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_THROTTLE_POS].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "COOLANT_TEMP": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_COOLANT_TEMP].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "ENGINE_LOAD": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_ENGINE_LOAD].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "SHORT_FUEL_TRIM_1": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_SHORT_FUEL_TRIM_1].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "LONG_FUEL_TRIM_1": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_LONG_FUEL_TRIM_1].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "INTAKE_PRESSURE": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_INTAKE_PRESSURE].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "TIMING_ADVANCE": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_TIMING_ADVANCE].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "INTAKE_TEMP": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_INTAKE_TEMP].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "RELATIVE_THROTTLE_POS": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_RELATIVE_THROTTLE_POS].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "ABSOLUTE_LOAD": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_ABSOLUTE_LOAD].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                },
+                "OIL_TEMP": {
+                    "kind": "numeric",
+                    "value": {
+                        "tsx": "$event.[series_OIL_TEMP].Double"
+                    },
+                    "filter": null,
+                    "aggregation": {
+                        "tsx": "avg($value)"
+                    }
+                }
+            }
+        }
+    ]
+}

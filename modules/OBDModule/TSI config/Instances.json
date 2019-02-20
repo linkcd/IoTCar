@@ -1,0 +1,17 @@
+{
+    "put": [
+        {
+            "timeSeriesId": [
+                "FengsDevice_OBD"
+            ],
+            "typeId": "d0370cb4-f185-42fc-bf39-7d533de3bed4",
+            "hierarchyIds": [
+                "49b54e84-2c0b-40f0-84f1-4034791d5d33"
+            ],
+            "instanceFields": {
+                "Car": "Feng Toyota Auris",
+                "Component": "OBD"
+            }
+        }
+    ]
+}

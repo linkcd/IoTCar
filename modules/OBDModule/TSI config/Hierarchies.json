@@ -1,0 +1,14 @@
+{
+    "put": [
+        {
+            "id": "49b54e84-2c0b-40f0-84f1-4034791d5d33",
+            "name": "Asset",
+            "source": {
+                "instanceFieldNames": [
+                    "Car",
+                    "Component"
+                ]
+            }
+        }
+    ]
+}
