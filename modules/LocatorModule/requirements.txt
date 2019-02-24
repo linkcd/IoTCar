@@ -1,2 +1,4 @@
 azure-iothub-device-client~=1.4.3
 gps3==0.33.3
+pyserial==3.4
+pynmea2==1.15.0
