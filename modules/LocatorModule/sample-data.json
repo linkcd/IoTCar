@@ -1,0 +1,26 @@
+{
+    "series": [
+        {
+            "mag_variation": "",
+            "latitude_dir": "N",
+            "num_sats": "05",
+            "gps_quality": 1,
+            "geo_sep": "39.1",
+            "fixed_date": "2019-02-25",
+            "mag_var_dir": "",
+            "geo_sep_units": "M",
+            "latitude": "55.000000",
+            "true_course": null,
+            "horizontal_dil": "1.57",
+            "longitude": "55.000000",
+            "fixed_full_timestamp": "2019-02-25 20:26:04",
+            "fixed_time": "20:26:04",
+            "altitude": 98.3,
+            "altitude_units": "M",
+            "longitude_dir": "E",
+            "speed": 0.013
+        }
+    ],
+    "timestamp": "2019-02-25 20:26:04.775441",
+    "deviceId": "test_device_GPS"
+}
