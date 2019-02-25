@@ -14,6 +14,7 @@ while True:
         #new GPS point than previous one, send to iot hub
         jsonPayload = latestFixedPoint.buildJsonPayload("test_device")
         print("Payload of new GPS data is: " + jsonPayload)
+        latestFixedTime = latestFixedPoint.sentenceTimestamp
         print("++++++++++++++++++++")
     else:
         print(str(datetime.now()) + ": Not fixed yet....")

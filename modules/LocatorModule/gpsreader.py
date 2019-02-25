@@ -21,6 +21,8 @@ class GPSReader:
                 return False
 
         def getCoordiateFromValueInSentence(self, value):
+            if value is None or value == "":
+                return None
             # The latitude is formatted as DDMM.ffff and longitude is DDDMM.ffff where D is the degrees and M is minutes plus the fractional minutes. 
             # So, 1300.8067,N is 13 degrees 00.8067 minutes North and the longitude of 07733.0003,E is read as 77 degrees 33.0003 minutes East.
             # Converting to degrees you would have to do this: 13 + 00.8067/60 for latitude and 77 + 33.0003/60 for the longitude.
@@ -62,7 +64,7 @@ class GPSReader:
             #definition of pynmea2 sentence: https://github.com/Knio/pynmea2/blob/master/pynmea2/types/talker.py
             #sample test of pynmea2: https://github.com/Knio/pynmea2/blob/master/test/test_types.py 
 
-            if result.sentence_type == 'GGA':
+            if result.sentence_type == 'GGA': # and result.gps_qual == 1: #only save valid (gps fixed) data
                 self.data["latitude"] = self.getCoordiateFromValueInSentence(result.lat)            
                 self.data["latitude_dir"] = result.lat_dir
                 self.data["longitude"] = self.getCoordiateFromValueInSentence(result.lon)
@@ -77,7 +79,7 @@ class GPSReader:
                 #self.data["age_gps_data"] = result.age_gps_data
                 #self.data["ref_station_id"] = result.ref_station_id
 
-            if result.sentence_type == 'RMC':
+            if result.sentence_type == 'RMC': # and result.spd_over_grnd is not None: #only save valid data
                 self.data["fixed_date"] = str(result.datestamp) # have to convert from datetime to string for json dump
 
                 #save full timestamp (date + time)
@@ -107,7 +109,7 @@ class GPSReader:
 
         def getLatestFixedGPSPoint(self):
             for point in self.__storage:
-                if point.isFixed:
+                if point.isFixed():
                     return point
             #return none if didnot find fixed one
             return None    
@@ -155,7 +157,6 @@ class GPSReader:
 
     def __initSerialStream(self):
         print(">>> Initaling GPS serial stream from: " + self.__serialttyAC)
-        self.isFixed = False
 
         if self.__serialStream is not None and not self.__serialStream.closed:
             print("close serial stream...")

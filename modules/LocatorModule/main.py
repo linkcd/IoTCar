@@ -79,6 +79,7 @@ def main(protocol):
                 print("Payload of new GPS data is: " + jsonPayload)
                 msg = IoTHubMessage(bytearray(jsonPayload, 'utf8'))
                 hub_manager.forward_event_to_output("gps", msg, 0)
+                latestFixedTime = latestFixedPoint.sentenceTimestamp
             else:
                 print(str(datetime.now()) + ": Not fixed yet....")
             time.sleep(1)
