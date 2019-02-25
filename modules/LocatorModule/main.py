@@ -73,7 +73,7 @@ def main(protocol):
 
         while True:
             latestFixedPoint = myGPSReader.getLatestFixedGPSPoint()
-            if latestFixedPoint is not None and latestFixedPoint.sentenceIimestamp != latestFixedTime:
+            if latestFixedPoint is not None and latestFixedPoint.sentenceTimestamp != latestFixedTime:
                 #new GPS point than previous one, send to iot hub
                 jsonPayload = latestFixedPoint.buildJsonPayload(DEVICE_ID)
                 print("Payload of new GPS data is: " + jsonPayload)
