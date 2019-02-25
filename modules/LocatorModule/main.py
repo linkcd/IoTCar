@@ -9,11 +9,19 @@ import iothub_client
 # pylint: disable=E0611
 from iothub_client import IoTHubModuleClient, IoTHubClientError, IoTHubTransportProvider
 from iothub_client import IoTHubMessage, IoTHubMessageDispositionResult, IoTHubError
+import json
+from datetime import datetime
+from gpsreader import GPSReader 
 
 # messageTimeout - the maximum time in milliseconds until a message times out.
 # The timeout period starts at IoTHubModuleClient.send_event_async.
 # By default, messages do not expire.
 MESSAGE_TIMEOUT = 10000
+
+#TODO get real device id
+DEVICE_ID = "FengsDevice"
+GPSDeviceTtyAC = "/dev/ttyACM0"
+
 
 # global counters
 RECEIVE_CALLBACKS = 0
@@ -32,24 +40,6 @@ def send_confirmation_callback(message, result, user_context):
     SEND_CALLBACKS += 1
     print ( "    Total calls confirmed: %d" % SEND_CALLBACKS )
 
-
-# receive_message_callback is invoked when an incoming message arrives on the specified 
-# input queue (in the case of this sample, "input1").  Because this is a filter module, 
-# we will forward this message onto the "output1" queue.
-def receive_message_callback(message, hubManager):
-    global RECEIVE_CALLBACKS
-    message_buffer = message.get_bytearray()
-    size = len(message_buffer)
-    print ( "    Data: <<<%s>>> & Size=%d" % (message_buffer[:size].decode('utf-8'), size) )
-    map_properties = message.properties()
-    key_value_pair = map_properties.get_internals()
-    print ( "    Properties: %s" % key_value_pair )
-    RECEIVE_CALLBACKS += 1
-    print ( "    Total calls received: %d" % RECEIVE_CALLBACKS )
-    hubManager.forward_event_to_output("output1", message, 0)
-    return IoTHubMessageDispositionResult.ACCEPTED
-
-
 class HubManager(object):
 
     def __init__(
@@ -62,10 +52,6 @@ class HubManager(object):
         # set the time until a message times out
         self.client.set_option("messageTimeout", MESSAGE_TIMEOUT)
         
-        # sets the callback when a message arrives on "input1" queue.  Messages sent to 
-        # other inputs or to the default will be silently discarded.
-        self.client.set_message_callback("input1", receive_message_callback, self)
-
     # Forwards the message received onto the next stage in the process.
     def forward_event_to_output(self, outputQueueName, event, send_context):
         self.client.send_event_async(
@@ -78,10 +64,23 @@ def main(protocol):
 
         hub_manager = HubManager(protocol)
 
-        print ( "Starting the IoT Hub Python sample using protocol %s..." % hub_manager.client_protocol )
-        print ( "The sample is now waiting for messages and will indefinitely.  Press Ctrl-C to exit. ")
+        print ( "Starting the GPS locator module using protocol %s..." % hub_manager.client_protocol )
+        print ( "This module is now waiting for messages and will indefinitely.  Press Ctrl-C to exit. ")
+
+        #start reading gps data...
+        myGPSReader = GPSReader(GPSDeviceTtyAC)
+        latestFixedTime = None
 
         while True:
+            latestFixedPoint = myGPSReader.getLatestFixedGPSPoint()
+            if latestFixedPoint is not None and latestFixedPoint.sentenceIimestamp != latestFixedTime:
+                #new GPS point than previous one, send to iot hub
+                jsonPayload = latestFixedPoint.buildJsonPayload(DEVICE_ID)
+                print("Payload of new GPS data is: " + jsonPayload)
+                msg = IoTHubMessage(bytearray(jsonPayload, 'utf8'))
+                hub_manager.forward_event_to_output("gps", msg, 0)
+            else:
+                print(str(datetime.now()) + ": Not fixed yet....")
             time.sleep(1)
 
     except IoTHubError as iothub_error:

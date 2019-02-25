@@ -4,17 +4,13 @@ import threading
 import json
 from datetime import datetime
 from collections import deque
-
 import time
-
-
 
 class GPSReader:
     class GPSDataPoint:
         def __init__(self, sentenceIimestamp):
             self.sentenceTimestamp = sentenceIimestamp
             self.data = {}
-            self.data["sentenceTimestamp"] = sentenceIimestamp
         
         def isFixed(self):
             if "gps_quality" in self.data and self.data["gps_quality"] == 1:
@@ -23,7 +19,6 @@ class GPSReader:
                 return False
         
         def saveSentenceResult(self, result):
-            
             if result.sentence_type == 'GGA':
                 self.data["latitude"] = result.lat             
                 self.data["latitude_dir"] = result.lat_dir
@@ -41,19 +36,28 @@ class GPSReader:
 
             if result.sentence_type == 'RMC':
                 self.data["datestamp"] = result.datestamp
+
+                #save full timestamp (date + time)
+                if result.datestamp is not None:
+                    fulldt = datetime.combine(result.datestamp, self.sentenceTimestamp)
+                    self.data["full_timestamp"] = fulldt
+
                 self.data["speed"] = result.spd_over_grnd
                 self.data["true_course"] = result.true_course
                 self.data["mag_variation"] = result.mag_variation
                 self.data["mag_var_dir"] = result.mag_var_dir
+        
+        def buildJsonPayload(self, deviceId):
+            mydeviceId = deviceId + "_GPS"
+            if "full_timestamp" in self.data:
+                full_timestamp = self.data["full_timestamp"]
+            else:   
+                full_timestamp = str(datetime.now())
+            payload = {'timestamp': full_timestamp, 'deviceId': mydeviceId, "series":[self.data]}
 
-        def getJson(self):
-            #try to get full timestamp (date + time), and save to "timestamp" json field
-            if "datestamp" in self.data and self.data["datestamp"] is not None:
-                fulldt = datetime.combine(self.data["datestamp"], self.sentenceTimestamp)
-                self.data["timestamp"] = fulldt
-                
-            json.dumps(self.data)
-
+            return json.dumps(payload)
+    
+    
     class GPSDataPointsManager:
         def __init__(self):
             self.storage = deque(maxlen=5)
@@ -137,9 +141,6 @@ class GPSReader:
     #public method
     def getLatestFixedGPSPoint(self):
         return self.__pointsManager.getLatestFixedGPSPoint()
-
-
-
 
 
 
