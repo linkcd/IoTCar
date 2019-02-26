@@ -1,26 +1,26 @@
 {
-    "deviceId": "FengsDevice_GPS",
-    "timestamp": "2019-02-25 21:30:35.437445",
     "series": [
         {
-            "geo_sep": "39.1",
-            "fixed_date": "2019-02-25",
-            "true_course": null,
-            "num_sats": "07",
-            "altitude_units": "M",
-            "fixed_time": "21:30:35",
             "mag_variation": "",
-            "horizontal_dil": "2.38",
-            "speed": 0.094,
-            "altitude": 78.3,
-            "longitude": "22.222222",
-            "latitude_dir": "N",
-            "gps_quality": 1,
-            "latitude": "33.333333",
-            "mag_var_dir": "",
+            "geo_sep": "39.1",
+            "num_sats": 5,
+            "fixed_time": "20:33:21",
             "geo_sep_units": "M",
-            "fixed_full_timestamp": "2019-02-25 21:30:35",
-            "longitude_dir": "E"
+            "horizontal_dil": "2.21",
+            "longitude_dir": "E",
+            "mag_var_dir": "",
+            "gps_speed": 0.242,
+            "altitude_units": "M",
+            "true_course": null,
+            "latitude": "11.111111",
+            "fixed_full_timestamp": "2019-02-26 20:33:21",
+            "latitude_dir": "N",
+            "fixed_date": "2019-02-26",
+            "gps_quality": 1,
+            "longitude": "22.222222",
+            "altitude": 93.4
         }
-    ]
+    ],
+    "deviceId": "FengsDevice_GPS",
+    "timestamp": "2019-02-26 20:33:21"
 }

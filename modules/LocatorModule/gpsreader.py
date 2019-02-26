@@ -94,8 +94,8 @@ class GPSReader:
         
         def buildJsonPayload(self, deviceId):
             mydeviceId = deviceId + "_GPS"
-            if "full_timestamp" in self.data:
-                full_timestamp = self.data["full_timestamp"]
+            if "fixed_full_timestamp" in self.data:
+                full_timestamp = self.data["fixed_full_timestamp"]
             else:   
                 full_timestamp = str(datetime.now())
             payload = {'timestamp': full_timestamp, 'deviceId': mydeviceId, "series":[self.data]}
