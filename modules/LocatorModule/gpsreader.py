@@ -72,7 +72,7 @@ class GPSReader:
                 self.data["altitude"] = result.altitude
                 self.data["altitude_units"] = result.altitude_units
                 self.data["gps_quality"] = result.gps_qual
-                self.data["num_sats"] = result.num_sats
+                self.data["num_sats"] = int(result.num_sats)
                 self.data["horizontal_dil"] = result.horizontal_dil
                 self.data["geo_sep"] = result.geo_sep
                 self.data["geo_sep_units"] = result.geo_sep_units
@@ -87,7 +87,7 @@ class GPSReader:
                     fulldt = datetime.combine(result.datestamp, self.sentenceTimestamp)
                     self.data["fixed_full_timestamp"] = str(fulldt) # have to convert from datetime to string for json dump
 
-                self.data["speed"] = result.spd_over_grnd
+                self.data["gps_speed"] = result.spd_over_grnd
                 self.data["true_course"] = result.true_course
                 self.data["mag_variation"] = result.mag_variation
                 self.data["mag_var_dir"] = result.mag_var_dir
