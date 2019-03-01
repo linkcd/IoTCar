@@ -20,6 +20,9 @@ class GPSReader:
             else:
                 return False
 
+        def getKMFromKnot(self, knot):
+            return knot * 1.852 #1 knots to km/h = 1.852 km/h
+
         def getCoordiateFromValueInSentence(self, value):
             if value is None or value == "":
                 return None
@@ -87,7 +90,7 @@ class GPSReader:
                     fulldt = datetime.combine(result.datestamp, self.sentenceTimestamp)
                     self.data["fixed_full_timestamp"] = str(fulldt) # have to convert from datetime to string for json dump
 
-                self.data["gps_speed"] = result.spd_over_grnd
+                self.data["gps_speed"] = self.getKMFromKnot(result.spd_over_grnd)
                 self.data["true_course"] = result.true_course
                 self.data["mag_variation"] = result.mag_variation
                 self.data["mag_var_dir"] = result.mag_var_dir
