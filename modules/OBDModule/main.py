@@ -47,6 +47,9 @@ class HubManager(object):
         self.client = IoTHubModuleClient()
         self.client.create_from_environment(protocol)
 
+        # has to setup auto_url_encode_decode in order to use content type and encoding
+        self.client.set_option('auto_url_encode_decode', True)
+
         # set the time until a message times out
         self.client.set_option("messageTimeout", MESSAGE_TIMEOUT)
         
@@ -70,6 +73,18 @@ def main(protocol):
             print("received obd msg: " + str(obdMsg))
             if(obdMsg is not None):
                 msg = IoTHubMessage(bytearray(obdMsg, 'utf8'))
+
+                #in order to use IoT Hub message routing on body, we have to setup the content type and encoding
+                set_content_result = msg.set_content_encoding_system_property("utf-8")
+                set_content_type_result = msg.set_content_type_system_property("application/json")
+
+                if set_content_result != 0:
+                    print("set_content_encoding_system_property FAILED")
+                            
+                if set_content_type_result != 0:
+                    print("set_content_type_system_property FAILED")
+
+
                 hub_manager.forward_event_to_output("obd", msg, 0)
             time.sleep(1)
 

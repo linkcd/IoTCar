@@ -21,7 +21,8 @@ class GPSReader:
                 return False
 
         def getKMFromKnot(self, knot):
-            return knot * 1.852 #1 knots to km/h = 1.852 km/h
+            #1 knots to km/h = 1.852 km/h
+            return knot * 1.852 if knot is not None else None
 
         def getCoordiateFromValueInSentence(self, value):
             if value is None or value == "":
